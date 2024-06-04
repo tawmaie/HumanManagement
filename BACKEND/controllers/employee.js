@@ -1,3 +1,11 @@
+const Employee = require('../models/employee');
+
 exports.getAllEmployees = async (req, res) => {
-    res.send('All employees');
+    try {
+        const employees = await Employee.all();
+        res.json(employees);
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 }
