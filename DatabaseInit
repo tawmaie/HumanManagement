@@ -1,0 +1,65 @@
+-- Use the existing database
+USE hr;
+
+-- Create Departments table
+CREATE TABLE IF NOT EXISTS departments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT
+);
+
+-- Create Roles table
+CREATE TABLE IF NOT EXISTS roles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description TEXT
+);
+
+-- Create Employees table
+CREATE TABLE IF NOT EXISTS employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(15),
+    hire_date DATE NOT NULL,
+    department_id INT,
+    role_id INT
+);
+
+-- Create Salaries table
+CREATE TABLE IF NOT EXISTS salaries (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT,
+    amount DECIMAL(10, 2) NOT NULL,
+    from_date DATE NOT NULL,
+    to_date DATE
+);
+
+-- Create Attendance table
+CREATE TABLE IF NOT EXISTS attendance (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT,
+    date DATE NOT NULL,
+    status ENUM('Present', 'Absent', 'Leave', 'Half-day') NOT NULL
+);
+
+-- Create Leave Requests table
+CREATE TABLE IF NOT EXISTS leave_requests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    status ENUM('Pending', 'Approved', 'Rejected') NOT NULL,
+    reason TEXT
+);
+
+-- Create Performance Reviews table
+CREATE TABLE IF NOT EXISTS performance_reviews (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT,
+    review_date DATE NOT NULL,
+    reviewer VARCHAR(100) NOT NULL,
+    comments TEXT,
+    rating INT CHECK (rating >= 1 AND rating <= 5)
+);
